@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basit Kare Pacman</title>
+</head>
+<body style="text-align: center; font-family: sans-serif; background-color: #f0f0f0;">
+
+    <h2>Kare Pacman</h2>
+    <p>Ok tuşlarıyla sarı kareyi hareket ettir ve kırmızıları ye!</p>
+    <h3 id="skorYazi">Skor: 0</h3>
+
+    <div id="alan" style="width: 400px; height: 400px; background-color: black; position: relative; margin: 0 auto; border: 5px solid gray;">
+        <div id="oyuncu" style="width: 20px; height: 20px; background-color: yellow; position: absolute; left: 0px; top: 0px;"></div>
+        
+        <div id="yem1" style="width: 15px; height: 15px; background-color: red; position: absolute; left: 100px; top: 100px;"></div>
+        <div id="yem2" style="width: 15px; height: 15px; background-color: red; position: absolute; left: 300px; top: 50px;"></div>
+        <div id="yem3" style="width: 15px; height: 15px; background-color: red; position: absolute; left: 200px; top: 300px;"></div>
+        <div id="yem4" style="width: 15px; height: 15px; background-color: red; position: absolute; left: 50px; top: 250px;"></div>
+    </div>
+
+    <br><br>
+    <a href="index.html"><button>Geri Dön</button></a>
+
+    <script>
+        var x = 0;
+        var y = 0;
+        var skor = 0;
+
+        // Klavyeye basıldığında çalışan fonksiyon
+        window.onkeydown = function(olay) {
+            // Sağ
+            if(olay.keyCode == 39 && x < 380) { x = x + 20; }
+            // Sol
+            if(olay.keyCode == 37 && x > 0) { x = x - 20; }
+            // Aşağı
+            if(olay.keyCode == 40 && y < 380) { y = y + 20; }
+            // Yukarı
+            if(olay.keyCode == 38 && y > 0) { y = y - 20; }
+
+            // Karakteri hareket ettir
+            document.getElementById("oyuncu").style.left = x + "px";
+            document.getElementById("oyuncu").style.top = y + "px";
+
+            // Yem yeme kontrolü (Çok basit mantık)
+            kontrolEt("yem1");
+            kontrolEt("yem2");
+            kontrolEt("yem3");
+            kontrolEt("yem4");
+        };
+
+        function kontrolEt(yemId) {
+            var yem = document.getElementById(yemId);
+            if(yem.style.display != "none") {
+                // Eğer oyuncu yemin üstüne geldiyse (yaklaşık değerler)
+                var yemX = parseInt(yem.style.left);
+                var yemY = parseInt(yem.style.top);
+
+                if(x == yemX && y == yemY) {
+                    yem.style.display = "none";
+                    skor = skor + 10;
+                    document.getElementById("skorYazi").innerHTML = "Skor: " + skor;
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
